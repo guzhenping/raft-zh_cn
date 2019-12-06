@@ -1,3 +1,4 @@
 .DS_Store
 demo/raft-go/.idea
 demo/raft-go/raft/raft
+.idea

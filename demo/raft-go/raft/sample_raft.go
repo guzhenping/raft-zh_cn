@@ -11,7 +11,10 @@ import (
 )
 
 /* 实现简单的Raft协议，用于学习。这是第一个版本，后续实现复杂场景的raft协议
-   参考：https://blog.csdn.net/s15738841819/article/details/84286276
+   提示，这里没有出现 AppendEntries RPC 和 RequestVote RPC 等相关的函数名，可能读过原著论文的同学会有点不适应（我就是...）,不太完美
+   参考1: https://blog.csdn.net/s15738841819/article/details/84286276
+   参考2: http://oserror.com/distributed/implement-raft-with-golang-first/
+   参考3: MIT 6.824课程
 */
 
 const RAFTCOUNT = 3
@@ -34,11 +37,11 @@ type Raft struct {
 	state               int       // 0: follower, 1: candidate, 2: leader
 	lastMessageTime     int64     // 发送最后一条消息的时间戳
 	currentLeader       int       // 当前节点的领导
+	timeout             int       // 超时时间
 	messageChan         chan bool // 消息通道
 	electChan           chan bool // 选举通道
 	heartbeatChan       chan bool // 心跳信号
 	returnHeartbeatChan chan bool // 返回心跳信号
-	timeout             int       // 超时时间
 }
 
 
